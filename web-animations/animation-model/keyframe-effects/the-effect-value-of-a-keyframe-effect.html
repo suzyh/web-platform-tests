@@ -109,6 +109,18 @@ test(function(t) {
 
 }, "Test visibility clamping behavior with an easing that has a negative component");
 
+test(function(t) {
+  var div = createDiv(t);
+  div.style.color = 'rgb(0, 0, 0)';
+  var anim = div.animate({ color: [ '-webkit-text', '-webkit-text'] }, 1000);
+
+  anim.pause();
+  anim.currentTime = 0;
+
+  assert_equals(getComputedStyle(div).color, 'rgb(0, 0, 0)');
+
+}, 'Tests keyframes with property values which are unsupported are removed');
+
 done();
 </script>
 </body>

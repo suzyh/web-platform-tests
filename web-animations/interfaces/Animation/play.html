@@ -31,5 +31,15 @@ promise_test(function(t) {
 }, 'play() throws when seeking an infinite-duration animation played in ' +
    'reverse');
 
+test(function(t) {
+    var element = createDiv(t);
+    var animation = element.animate([{left: '0px'}, {left: '100px'}], 10);
+    animation.finish();
+    assert_equals(getComputedStyle(element).left, 'auto');
+
+    animation.play();
+    assert_equals(getComputedStyle(element).left, '0px');
+}, 'Calling play() after finish() causes the animation to reset');
+
 </script>
 </body>

@@ -61,5 +61,18 @@ promise_test(function(t) {
                      'Animation has a unresolved start time');
 }, 'The current time is calculated from the timeline time, start time and ' +
    'playback rate');
+
+promise_test(function(t) {
+  var animation =
+    new Animation(new KeyframeEffect(createDiv(t), null, 100 * MS_PER_SEC),
+                  document.timeline);
+
+  animation.playbackRate = 0;
+
+  return animation.ready
+      .then(function() { return waitForAnimationFrames(1); })
+      .then(function() { assert_times_equal(animation.currentTime, 0); });
+}, 'animation.currentTime should be constant if there is a 0 playback rate');
+
 </script>
 </body>

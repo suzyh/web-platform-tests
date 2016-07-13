@@ -52,6 +52,13 @@ gInvalidKeyframesTests.forEach(function(subtest) {
 });
 
 test(function(t) {
+  var element = createDiv(t);
+  assert_true(element.animate(null) != null);
+  assert_true(element.animate(null, 1) != null);
+  assert_true(element.animate(null, {duration : 1}) != null);
+}, 'Animate should accept a null effect.');
+
+test(function(t) {
   var div = createDiv(t);
   var anim = div.animate({ opacity: [ 0, 1 ] }, 2000);
   assert_equals(anim.effect.timing.duration, 2000);
