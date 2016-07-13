@@ -12,8 +12,8 @@ function assertAnimationEffect({keyframes, expect}) {
   for (let i = 0; i < expect.length; i++) {
     assert_equals(frames[i].computedOffset, expect[i].at);
     for (var property in expect[i].is)
-      assert_equals(frames[i][property], expect[i].is[property], 
-	  `${property} is ${expect[i].is[property]} at ${expect[i].at}`);
+      assert_equals(frames[i][property], expect[i].is[property],
+          `${property} is ${expect[i].is[property]} at ${expect[i].at}`);
   }
   return frames;
 }
