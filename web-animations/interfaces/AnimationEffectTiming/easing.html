@@ -40,17 +40,49 @@ gEffectEasingTests.forEach(function(options) {
 });
 
 test(function(t) {
+  var invalidEasings = [
+    '',
+    'test',
+    'initial',
+    'inherit',
+    'unset',
+    'steps(3, nowhere)',
+    'steps(-3, end)',
+    'cubic-bezier(0.1, 0, 4, 0.4)',
+    'function (a){return a}',
+    'function (x){return x}',
+    'function(x, y){return 0.3}',
+    '7',
+  ];
   var div = createDiv(t);
-  var anim = div.animate({ opacity: [ 0, 1 ] }, 100 * MS_PER_SEC);
-  assert_throws({ name: 'TypeError' },
-                function() {
-                  anim.effect.timing.easing = '';
-                });
-  assert_throws({ name: 'TypeError' },
-                function() {
-                  anim.effect.timing.easing = 'test';
-                });
-}, 'Test invalid easing value');
+  var anim = div.animate({});
+  for (var invalidEasing of invalidEasings) {
+    assert_throws({ name: 'TypeError' }, function() {
+      anim.effect.timing.easing = invalidEasing;
+    }, invalidEasing);
+  }
+}, 'Test invalid easing values');
+
+test(function(t) {
+  var roundTripEasings = [
+    'ease',
+    'linear',
+    'ease-in',
+    'ease-out',
+    'ease-in-out',
+    'step-start',
+    'step-end',
+    'steps(3, start)',
+    'steps(3, end)',
+    'cubic-bezier(0.1, 5, 0.23, 0)',
+  ];
+  var div = createDiv(t);
+  var anim = div.animate({});
+  for (var easing of roundTripEasings) {
+    anim.effect.timing.easing = easing;
+    assert_equals(anim.effect.timing.easing, easing);
+  }
+}, 'Test easing round trip equality');
 
 test(function(t) {
   var delay = 1000 * MS_PER_SEC;
