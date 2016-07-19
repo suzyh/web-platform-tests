@@ -8,8 +8,8 @@
 <script>
 
 async_test(function(t) {
-  var anim1 = createDiv(t).animate([], 100000);
-  var anim2 = createDiv(t).animate([], 100000);
+  var anim1 = createDiv(t).animate(null, 100 * MS_PER_SEC);
+  var anim2 = createDiv(t).animate(null, 100 * MS_PER_SEC);
 
   var fired = false;
 
