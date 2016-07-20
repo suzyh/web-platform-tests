@@ -80,6 +80,25 @@ gNonAnimatableProps.forEach(function(prop) {
      + ' a keyframe sequence');
 });
 
+// Test mapping of keyframe attributes to CSS properties
+
+test(function(t) {
+  var div = createDiv(t);
+  div.style.fontSize = '100px';
+  assert_equals(getComputedStyle(div).fontSize, '100px',
+                'Inline style should appear in getComputedStyle');
+
+  div.animate({'font-size': '200px'}, {fill: 'forwards'});
+  assert_equals(getComputedStyle(div).fontSize, '100px',
+                'Hyphenated property name should match with CSS property name ' +
+                'and not have an effect on computed style');
+
+  div.animate({fontSize: '300px'}, {fill: 'forwards'});
+  assert_equals(getComputedStyle(div).fontSize, '300px',
+                'Camel cased property name should match with CSS property name ' +
+                'and have an effect on computed style');
+}, 'Hyphenated CSS property names are ignored in keyframes');
+
 // Test handling of custom iterable objects.
 
 function createIterable(iterations) {
